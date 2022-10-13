@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.example.qadaacounter">
+    package="com.android.example.qadaacounter" >
 
     <application
         android:allowBackup="true"
@@ -12,12 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QadaaCounter"
-        tools:targetApi="31">
+        android:name=".QadaaApplication"
+        tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
+            android:name=".feature_qadaa.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.QadaaCounter">
+            android:theme="@style/Theme.QadaaCounter" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

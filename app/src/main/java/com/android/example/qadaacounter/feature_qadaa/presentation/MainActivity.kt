@@ -1,8 +1,9 @@
-package com.android.example.qadaacounter
+package com.android.example.qadaacounter.feature_qadaa.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -10,31 +11,26 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.example.qadaacounter.ui.theme.QadaaCounterTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            QadaaCounterTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+            AmountMonitor()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun AmountMonitor(
+    viewModel: QadaaViewModel = hiltViewModel()
+) {
+    viewModel.addAmount()
+    val state = viewModel.state.value
+    Text(text = state.amount.toString(), modifier = Modifier.clickable { viewModel.addAmount() })
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    QadaaCounterTheme {
-        Greeting("Android")
-    }
-}
