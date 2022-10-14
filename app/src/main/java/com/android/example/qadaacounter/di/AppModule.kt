@@ -7,8 +7,7 @@ import com.android.example.qadaacounter.feature_qadaa.data.data_source.QaDao
 import com.android.example.qadaacounter.feature_qadaa.data.data_source.QaDataBase
 import com.android.example.qadaacounter.feature_qadaa.data.repository.QaRepositoryImpl
 import com.android.example.qadaacounter.feature_qadaa.domain.repository.QaRepository
-import com.android.example.qadaacounter.feature_qadaa.domain.use_cases.IncreaseAmount
-import com.android.example.qadaacounter.feature_qadaa.domain.use_cases.UseCases
+import com.android.example.qadaacounter.feature_qadaa.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,7 +36,11 @@ object AppModule {
     @Singleton
     fun provideUseCases(qaRepository: QaRepository) : UseCases {
         return UseCases(
-            increaseAmount = IncreaseAmount(qaRepository)
+            increaseAmount = IncreaseAmount(qaRepository),
+            decreaseAmount = DecreaseAmount(qaRepository),
+            getPrayerData = GetPrayerData(qaRepository),
+            cleanPrayerData = CleanPrayerData(qaRepository),
+            insertEmptyPrayer = InsertEmptyPrayer(qaRepository)
         )
     }
 }

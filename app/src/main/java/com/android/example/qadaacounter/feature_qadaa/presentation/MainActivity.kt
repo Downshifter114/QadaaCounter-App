@@ -1,8 +1,10 @@
 package com.android.example.qadaacounter.feature_qadaa.presentation
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -20,17 +22,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AmountMonitor()
+            Qadaa()
+
         }
+    }
+
+    override fun onStart() {
+        val viewModel: QadaaViewModel by viewModels()
+        viewModel.updateInterface()
+        super.onStart()
     }
 }
 
-@Composable
-fun AmountMonitor(
-    viewModel: QadaaViewModel = hiltViewModel()
-) {
-    viewModel.addAmount()
-    val state = viewModel.state.value
-    Text(text = state.amount.toString(), modifier = Modifier.clickable { viewModel.addAmount() })
-}
+
 
