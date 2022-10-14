@@ -8,6 +8,6 @@ class InsertEmptyPrayer @Inject constructor(
     private val repository: QaRepository
 ) {
     suspend operator fun invoke(id: String) {
-        repository.insertPrayerData(PrayerEntity(id, 0, 0))
+        repository.insertPrayerData(PrayerEntity(id, 0, System.currentTimeMillis()))
     }
 }

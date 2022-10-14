@@ -10,7 +10,10 @@ class IncreaseAmount @Inject constructor(
     private val repository: QaRepository
 ) {
     suspend operator fun invoke(prayerEntity: PrayerEntity) {
-        repository.insertPrayerData(prayerEntity.copy(amount = prayerEntity.amount+1))
+        repository.insertPrayerData(prayerEntity.copy(
+            amount = prayerEntity.amount+1,
+            timeStamp = System.currentTimeMillis()
+        ))
         Log.i("MyTag", "Increase Amount invoke executed!")
     }
 }

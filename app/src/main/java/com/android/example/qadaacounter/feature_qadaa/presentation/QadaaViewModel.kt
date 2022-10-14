@@ -28,8 +28,6 @@ class QadaaViewModel @Inject constructor(
             is QadaaEvent.Decrease -> decrease(qadaaEvent.id)
             is QadaaEvent.Clear -> clear(qadaaEvent.id)
         }
-        //Update the User Interface
-        updateInterface()
     }
 
     private fun increase(id: String) {
@@ -39,6 +37,7 @@ class QadaaViewModel @Inject constructor(
                 useCases.insertEmptyPrayer(id)
             else
                 useCases.increaseAmount(prayer)
+            updateInterface()
         }
     }
 
@@ -49,6 +48,7 @@ class QadaaViewModel @Inject constructor(
                 useCases.insertEmptyPrayer(id)
             else
                 useCases.decreaseAmount(prayer)
+            updateInterface()
         }
     }
 
@@ -56,18 +56,20 @@ class QadaaViewModel @Inject constructor(
         viewModelScope.launch {
             val prayer: PrayerEntity? = useCases.getPrayerData(id)
             useCases.insertEmptyPrayer(id)
+            updateInterface()
         }
     }
 
     fun updateInterface() {
         viewModelScope.launch {
+            val timeStamp = System.currentTimeMillis()
             _state.value = state.value.copy(
-                fajr = useCases.getPrayerData("fajr") ?: PrayerEntity("fajr", 0,0),
-                dhuhr = useCases.getPrayerData("dhuhr") ?: PrayerEntity("dhuhr", 0,0),
-                asr = useCases.getPrayerData("asr") ?: PrayerEntity("asr", 0,0),
-                maghrib = useCases.getPrayerData("maghrib") ?: PrayerEntity("maghrib", 0,0),
-                isha = useCases.getPrayerData("isha") ?: PrayerEntity("isha", 0,0),
-                vitr = useCases.getPrayerData("vitr") ?: PrayerEntity("vitr", 0,0)
+                fajr = useCases.getPrayerData("fajr") ?: PrayerEntity("fajr", 0,timeStamp),
+                dhuhr = useCases.getPrayerData("dhuhr") ?: PrayerEntity("dhuhr", 0,timeStamp),
+                asr = useCases.getPrayerData("asr") ?: PrayerEntity("asr", 0,timeStamp),
+                maghrib = useCases.getPrayerData("maghrib") ?: PrayerEntity("maghrib", 0,timeStamp),
+                isha = useCases.getPrayerData("isha") ?: PrayerEntity("isha", 0,timeStamp),
+                vitr = useCases.getPrayerData("vitr") ?: PrayerEntity("vitr", 0,timeStamp)
             )
         }
     }
